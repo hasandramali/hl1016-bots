@@ -8,6 +8,7 @@ TARGET = podbot.so
 
 # Source files
 SRCS = bot.cpp \
+       bot_chat.cpp \
        bot_client.cpp \
        bot_combat.cpp \
        bot_globals.cpp \

@@ -9,6 +9,11 @@
 #include "bot.h"
 #include "bot_chat.h"
 
+#include <algorithm>
+#include <cctype>
+
+int i = 0;
+
 // Strips out Words between Chars like []
 inline void StripClanTags(char* pszTemp1,char* pszReturn,char* cTag1, char* cTag2)
 {
@@ -256,27 +261,24 @@ bool BotCheckKeywords(char *pszMessage, char *pszReply)
 
 bool BotParseChat(bot_t *pBot, char *pszReply)
 {
-	char szMessage[512];
+    char szMessage[512];
 
+    strcpy(szMessage, pBot->SaytextBuffer.szSayText);
 
-	// Copy to safe place
-	strcpy(szMessage,pBot->SaytextBuffer.szSayText);
-	// Text to uppercase for Keyword parsing
-	_strupr(szMessage);
+    std::transform(szMessage, szMessage + strlen(szMessage), szMessage, ::toupper);
 
-	int iMessageLen = strlen(szMessage);
-	int i = 0;
-	// Find the : char behind the name to get the
-	// start of the real text
-	while(i <= iMessageLen)
-	{
-		if(szMessage[i] == ':')
-			break;
-		i++;
-	}
-	return(BotCheckKeywords(&szMessage[i],pszReply));
+    int iMessageLen = strlen(szMessage);
+    int i = 0;
+
+    while (i <= iMessageLen)
+    {
+        if (szMessage[i] == ':')
+            break;
+        i++;
+    }
+
+    return BotCheckKeywords(&szMessage[i], pszReply);
 }
-
 
 bool BotRepliesToPlayer(bot_t *pBot)
 {
