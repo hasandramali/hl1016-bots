@@ -2,8 +2,8 @@
 
 # Compiler and linker
 CXX = g++
-CXXFLAGS = -O2 -Wall -Wextra -I../dlls -I../engine -I../utils/common -I../cl_dll -DTRUE=1 -DFALSE=0 -include cstring -D_GLIBCXX_USE_CXX11_ABI=0
-LDFLAGS = -shared
+CXXFLAGS = -m32 -O2 -Wall -Wextra -I../dlls -I../engine -I../utils/common -I../cl_dll -DTRUE=1 -DFALSE=0 -include cstring -D_GLIBCXX_USE_CXX11_ABI=0
+LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -Wl,-z,noexecstack
 TARGET = podbot.so
 
 # Source files
